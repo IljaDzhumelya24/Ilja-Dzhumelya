@@ -1,3 +1,7 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
 @font-face {
     font-family: 'ilja';
     src: url('Font/ilja.ttf') format('truetype');
@@ -531,3 +535,60 @@ html, body {
     background-color: #FF9E33;
   }
   
+/* Wetter-Box: Gradient + Schatten */
+.bento-box.weather {
+  background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 1rem;
+  font-family: 'Segoe UI', 'Joel', sans-serif;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ort oben */
+.weather__location {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Icon + Info nebeneinander */
+.weather__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.weather__icon {
+  font-size: 2rem;
+  width: 2.5rem;
+  text-align: center;
+}
+.weather__info {
+  margin-left: 0.75rem;
+  text-align: left;
+}
+.weather__temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.weather__desc {
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  opacity: 0.9;
+}
+
+/* Fehler-Anzeige */
+.weather.error {
+  background: linear-gradient(135deg, #F85C5C 0%, #FF9F9F 100%);
+}
+.weather.error .weather__location {
+  color: #ffeaea;
+}

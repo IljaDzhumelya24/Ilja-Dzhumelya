@@ -160,3 +160,55 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateBerlinClock, 1000);
   });
   
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.bento-box.weather');
+  const locEl     = container.querySelector('.weather__location');
+  const iconEl    = container.querySelector('.weather__icon');
+  const tempEl    = container.querySelector('.weather__temp');
+  const descEl    = container.querySelector('.weather__desc');
+  const apiKey    = 'DEIN_OPENWEATHERMAP_API_KEY'; // <-- hier eintragen
+
+  function setError(msg) {
+    container.classList.add('error');
+    locEl.textContent = msg;
+    iconEl.textContent = '⚠️';
+    tempEl.textContent = '--°';
+    descEl.textContent = '';
+  }
+
+  if (!navigator.geolocation) {
+    setError('No geolocation');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude: lat, longitude: lon } = pos.coords;
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather` +
+      `?lat=${lat}&lon=${lon}` +
+      `&units=metric&lang=en&appid=${apiKey}`
+    )
+    .then(r => r.json())
+    .then(data => {
+      if (data.cod !== 200) throw new Error(data.message);
+      // Ort
+      locEl.textContent = data.name;
+      // Icon
+      const iconCode = data.weather[0].icon;
+      iconEl.innerHTML = `<img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${data.weather[0].description}">`;
+      // Temperatur & Beschreibung
+      tempEl.textContent = `${Math.round(data.main.temp)}°C`;
+      descEl.textContent = data.weather[0].description;
+    })
+    .catch(err => {
+      console.error(err);
+      setError('Weather error');
+    });
+  }, err => {
+    console.error(err);
+    setError('Location denied');
+  });
+});
