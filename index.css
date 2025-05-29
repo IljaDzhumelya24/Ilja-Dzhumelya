@@ -535,60 +535,57 @@ html, body {
     background-color: #FF9E33;
   }
   
-/* Wetter-Box: Gradient + Schatten */
+
+
+
+
+
+
+/* ===== Weather-Box zurück zum originalen Bento-Grid-Maß, mit neuem Layout ===== */
 .bento-box.weather {
-  background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
-  border-radius: 1rem;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  /* kein width/height, damit sie wie alle anderen Boxes skaliert */
+  box-sizing: border-box;
   padding: 1rem;
-  font-family: 'Segoe UI', 'Joel', sans-serif;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Ort oben */
-.weather__location {
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  text-transform: capitalize;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Icon + Info nebeneinander */
-.weather__inner {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;       /* Icon & Temp oben anordnen */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+  border: 2px solid #222;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
-.weather__icon {
-  font-size: 2rem;
-  width: 2.5rem;
-  text-align: center;
-}
-.weather__info {
-  margin-left: 0.75rem;
+
+/* Linke Spalte: Ort & Beschreibung */
+.weather__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   text-align: left;
 }
-.weather__temp {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
+.weather__location {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 .weather__desc {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  opacity: 0.8;
   text-transform: capitalize;
-  opacity: 0.9;
 }
 
-/* Fehler-Anzeige */
-.weather.error {
-  background: linear-gradient(135deg, #F85C5C 0%, #FF9F9F 100%);
+/* Rechte Spalte: Icon & Temperatur, ganz rechts oben */
+.weather__right {
+  margin-left: auto;             /* schiebt sie an den rechten Rand */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: flex-start;        /* ganz oben */
 }
-.weather.error .weather__location {
-  color: #ffeaea;
+.weather__icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+.weather__temp {
+  font-size: 2rem;
+  font-weight: 700;
 }

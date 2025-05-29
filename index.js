@@ -164,51 +164,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.bento-box.weather');
-  const locEl     = container.querySelector('.weather__location');
-  const iconEl    = container.querySelector('.weather__icon');
-  const tempEl    = container.querySelector('.weather__temp');
-  const descEl    = container.querySelector('.weather__desc');
-  const apiKey    = '2f150a66868534d59453457e63803666'; // <-- hier eintragen
+  const box      = document.querySelector('.bento-box.weather');
+  const locEl    = box.querySelector('.weather__location');
+  const iconEl   = box.querySelector('.weather__icon');
+  const tempEl   = box.querySelector('.weather__temp');
+  const descEl   = box.querySelector('.weather__desc');
 
-  function setError(msg) {
-    container.classList.add('error');
+  // ganz oben im script.js, wo du weatherMap definierst:
+const weatherMap = {
+  0:  ['☀️','clear sky'],
+  1:  ['🌤️','mainly clear'],
+  2:  ['⛅️','partly cloudy'],
+  3:  ['☁️','overcast'],
+  45: ['🌫️','fog'],
+  48: ['🌫️','depositing rime fog'],
+  51: ['🌦️','light drizzle'],
+  53: ['🌧️','moderate drizzle'],
+  55: ['🌧️','dense drizzle'],
+  56: ['🌧️','light freezing drizzle'],
+  57: ['🌧️','dense freezing drizzle'],
+  61: ['🌧️','light rain'],
+  63: ['🌧️','moderate rain'],
+  65: ['🌧️','heavy rain'],
+  66: ['🌧️','light freezing rain'],       // neu
+  67: ['🌧️','heavy freezing rain'],      // neu
+  71: ['🌨️','light snow'],
+  73: ['🌨️','moderate snow'],
+  75: ['🌨️','heavy snow'],
+  77: ['🌨️','snow grains'],              // neu
+  80: ['🌧️','rain showers'],
+  81: ['🌧️','moderate showers'],
+  82: ['🌧️','violent showers'],
+  85: ['🌨️','light snow showers'],       // neu
+  86: ['🌨️','heavy snow showers'],       // neu
+  95: ['⛈️','thunderstorm'],
+  96: ['⛈️','thunderstorm w/ hail'],
+  99: ['⛈️','thunderstorm w/ heavy hail']
+};
+
+  function showError(msg) {
+    box.classList.add('error');
     locEl.textContent = msg;
     iconEl.textContent = '⚠️';
-    tempEl.textContent = '--°';
+    tempEl.textContent = '--°C';
     descEl.textContent = '';
   }
 
   if (!navigator.geolocation) {
-    setError('No geolocation');
-    return;
+    return showError('Geolocation unsupported');
   }
 
-  navigator.geolocation.getCurrentPosition(pos => {
-    const { latitude: lat, longitude: lon } = pos.coords;
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather` +
-      `?lat=${lat}&lon=${lon}` +
-      `&units=metric&lang=en&appid=${apiKey}`
-    )
-    .then(r => r.json())
-    .then(data => {
-      if (data.cod !== 200) throw new Error(data.message);
-      // Ort
-      locEl.textContent = data.name;
-      // Icon
-      const iconCode = data.weather[0].icon;
-      iconEl.innerHTML = `<img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${data.weather[0].description}">`;
-      // Temperatur & Beschreibung
-      tempEl.textContent = `${Math.round(data.main.temp)}°C`;
-      descEl.textContent = data.weather[0].description;
-    })
-    .catch(err => {
-      console.error(err);
-      setError('Weather error');
-    });
-  }, err => {
-    console.error(err);
-    setError('Location denied');
-  });
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { latitude: lat, longitude: lon } }) => {
+
+      // 1) Reverse-Geocode über Nominatim (ohne API-Key)
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en`)
+        .then(r => r.ok ? r.json() : Promise.reject(`Geo HTTP ${r.status}`))
+        .then(data => {
+          const addr = data.address;
+          // city oder town oder village oder fallbacks
+          const city = addr.city || addr.town || addr.village || addr.county || addr.state;
+          locEl.textContent = city || data.display_name || 'Unknown';
+        })
+        .catch(err => {
+          console.warn('Reverse geocode failed:', err);
+          locEl.textContent = `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+        });
+
+      // 2) Wetterdaten holen
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe%2FBerlin`)
+        .then(r => r.ok ? r.json() : Promise.reject(`Weather HTTP ${r.status}`))
+        .then(data => {
+          const cw = data.current_weather;
+          const [ico, txt] = weatherMap[cw.weathercode] || ['❔','unknown'];
+          iconEl.textContent = ico;
+          tempEl.textContent = `${Math.round(cw.temperature)}°C`;
+          descEl.textContent = txt;
+        })
+        .catch(err => {
+          console.error('Weather fetch failed:', err);
+          showError('Weather error');
+        });
+    },
+    err => {
+      console.error('Geolocation error:', err);
+      showError('Location denied');
+    }
+  );
 });
+
