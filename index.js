@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const iconEl    = container.querySelector('.weather__icon');
   const tempEl    = container.querySelector('.weather__temp');
   const descEl    = container.querySelector('.weather__desc');
-  const apiKey    = 'DEIN_OPENWEATHERMAP_API_KEY'; // <-- hier eintragen
+  const apiKey    = '2f150a66868534d59453457e63803666'; // <-- hier eintragen
 
   function setError(msg) {
     container.classList.add('error');
