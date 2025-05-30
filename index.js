@@ -253,3 +253,194 @@ const weatherMap = {
   );
 });
 
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const iconEl  = document.querySelector('.battery__icon');
+  const levelEl = document.querySelector('.battery__level');
+
+  // Fallback, falls nicht unterstützt
+  if (!navigator.getBattery) {
+    iconEl.textContent  = '❔';
+    levelEl.textContent = 'n/a';
+    return;
+  }
+
+  navigator.getBattery().then(battery => {
+    function update() {
+      const pct = Math.round(battery.level * 100);
+      levelEl.textContent = pct + '%';
+      iconEl.textContent  = battery.charging ? '⚡️' : '🔋';
+    }
+
+    // initial und bei Änderungen updaten
+    update();
+    battery.addEventListener('levelchange', update);
+    battery.addEventListener('chargingchange', update);
+  }).catch(err => {
+    console.error('Battery API error:', err);
+    iconEl.textContent  = '❓';
+    levelEl.textContent = 'err';
+  });
+});
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const iframe = document.getElementById('med-map');
+
+  if (!navigator.geolocation) {
+    // Fallback: Weltkarte
+    iframe.src = 'https://www.openstreetmap.org/export/embed.html?bbox=-180,-90,180,90&layer=mapnik';
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    ({ coords: { latitude: lat, longitude: lon } }) => {
+      const zoom = 14;  // Stadtviertel-Ansicht
+      const lat6 = lat.toFixed(6);
+      const lon6 = lon.toFixed(6);
+      // OSM-Embed zentriert mit Marker
+      iframe.src =
+        `https://www.openstreetmap.org/export/embed.html` +
+        `?layer=mapnik` +
+        `&map=${zoom}/${lat6}/${lon6}` +
+        `&marker=${lat6},${lon6}`;
+    },
+    err => {
+      console.error('Geolocation error:', err);
+      // Fallback: Weltkarte
+      iframe.src = 'https://www.openstreetmap.org/export/embed.html?bbox=-180,-90,180,90&layer=mapnik';
+    }
+  );
+});
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ids = ['bitcoin','ethereum','solana','ripple'];
+  const vs  = 'eur';
+  const url = `https://api.coingecko.com/api/v3/simple/price`
+            + `?ids=${ids.join(',')}`
+            + `&vs_currencies=${vs}`
+            + `&include_24hr_change=true`;
+
+  fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
+    .then(data => {
+      ids.forEach(id => {
+        const item   = document.querySelector(`.crypto__item[data-id="${id}"]`);
+        const price  = data[id][vs];
+        const change = data[id][`${vs}_24h_change`];
+
+        // Preis in € formatieren
+        item.querySelector('.crypto__price').textContent =
+          price.toLocaleString('de-DE', { style:'currency', currency:'EUR' });
+
+        // Change formatieren und Farbstil setzen
+        const chEl = item.querySelector('.crypto__change');
+        const sign = change >= 0 ? '+' : '';
+        chEl.textContent = `${sign}${change.toFixed(2)}%`;
+        chEl.classList.toggle('up', change >= 0);
+        chEl.classList.toggle('down', change < 0);
+      });
+    })
+    .catch(err => {
+      console.error('Crypto fetch error:', err);
+      document.querySelectorAll('.crypto__price')
+              .forEach(el => el.textContent = '–');
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const listEl  = document.querySelector('.bento-box.skills.news .news__list');
+  const proxy   = 'https://api.allorigins.win/get?url=';
+  const feedUrl = encodeURIComponent('https://www.tagesschau.de/xml/rss2/');
+
+  fetch(proxy + feedUrl)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      // data.contents enthält das XML als String
+      const parser = new DOMParser();
+      const xml    = parser.parseFromString(data.contents, 'text/xml');
+      const items  = Array.from(xml.querySelectorAll('item')).slice(0, 4);
+
+      if (items.length === 0) {
+        throw new Error('No items in feed');
+      }
+
+      listEl.innerHTML = '';
+      items.forEach(item => {
+        const title = item.querySelector('title')?.textContent.trim() || 'No title';
+        const link  = item.querySelector('link')?.textContent.trim()  || '#';
+        const li    = document.createElement('li');
+        li.className = 'news__item';
+        li.innerHTML = `<a href="${link}" target="_blank" rel="noopener">${title}</a>`;
+        listEl.appendChild(li);
+      });
+    })
+    .catch(err => {
+      console.error('RSS fetch error:', err);
+      listEl.innerHTML = '<li class="news__item">Unable to load RSS news.</li>';
+    });
+});
+
+
+
+// Debounce-Helfer
+function debounce(fn, delay) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), delay);
+  };
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const editor  = document.getElementById('playground-editor');
+  const preview = document.getElementById('playground-preview');
+
+  // 1) Beispiel-Code
+  const initialCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { margin:0; padding:1rem; font-family:sans-serif; background:#f5f5f5; }
+    h1 { color:#4FACFE; }
+  </style>
+</head>
+<body>
+  <h1>Live Preview</h1>
+  <p>Change the Code</p>
+</body>
+</html>`;
+
+  editor.value = initialCode;
+
+  // 2) Update-Funktion
+  const updatePreview = () => {
+    preview.srcdoc = editor.value;
+  };
+
+  // 3) Debounced auf Input
+  editor.addEventListener('input', debounce(updatePreview, 300));
+
+  // 4) Initiales Rendern
+  updatePreview();
+});

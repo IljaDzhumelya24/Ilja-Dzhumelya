@@ -51,9 +51,49 @@
       
         <div class="bento-box">Workouts</div>
       
-        <div class="bento-box span3-row projects">PROJECTS</div>
+        <div class="bento-box span3-row crypto">
+          <div class="crypto__content">
+            <!-- Zeile 1 -->
+            <div class="crypto__item" data-id="bitcoin">
+              <img class="crypto__icon"
+                  src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
+                  alt="BTC">
+              <div class="crypto__symbol">BTC</div>
+              <div class="crypto__price">–</div>
+              <div class="crypto__change"></div>
+            </div>
+            <div class="crypto__item" data-id="ethereum">
+              <img class="crypto__icon"
+                  src="https://assets.coingecko.com/coins/images/279/large/ethereum.png"
+                  alt="ETH">
+              <div class="crypto__symbol">ETH</div>
+              <div class="crypto__price">–</div>
+              <div class="crypto__change"></div>
+            </div>
+            <!-- Zeile 2 -->
+            <div class="crypto__item" data-id="solana">
+              <img class="crypto__icon"
+                  src="https://assets.coingecko.com/coins/images/4128/large/solana.png"
+                  alt="SOL">
+              <div class="crypto__symbol">SOL</div>
+              <div class="crypto__price">–</div>
+              <div class="crypto__change"></div>
+            </div>
+            <div class="crypto__item" data-id="ripple">
+              <img class="crypto__icon"
+                  src="https://assets.coingecko.com/coins/images/44/large/xrp.png"
+                  alt="XRP">
+              <div class="crypto__symbol">XRP</div>
+              <div class="crypto__price">–</div>
+              <div class="crypto__change"></div>
+            </div>
+          </div>
+        </div>
+
+
+
       
-        <div class="bento-box">Roaming</div>
+        <div class="bento-box">Projecte</div>
       
         <div class="bento-box span2-col weather">
           <div class="weather__content">
@@ -68,21 +108,34 @@
           </div>
         </div>
 
-
-
-
-
-      
         <div class="bento-box">AFib</div>
       
         <div class="bento-box tools-workflow">TOOLS & WORKFLOW</div>
       
-        <div class="bento-box span3-row skills">SKILLS</div>
+        <div class="bento-box span3-row skills news">
+          <ul class="news__list">
+            <li class="news__item">Loading news…</li>
+          </ul>
+        </div>
+
       
-        <div class="bento-box">Medications</div>
+        <div class="bento-box medications">
+          <div class="medications__map">
+            <iframe id="med-map" src="" loading="lazy"></iframe>
+          </div>
+        </div>
+
       
-        <div class="bento-box span2-col">Baterie</div>
-      
+        <div class="bento-box span2-col battery">
+          <div class="battery__left">
+            <div class="battery__icon">🔋</div>
+            <div class="battery__label">Battery</div>
+          </div>
+          <div class="battery__right">
+            <div class="battery__level">--%</div>
+          </div>
+        </div>
+
         <div class="bento-box experience">EXPERIENCE</div>
       
         <div class="bento-box span2-row custom-watch">
@@ -103,7 +156,42 @@
         <div class="bento-box">Faces</div>
 
       </section>
-      
+
+<section id="playground" class="bento-box span3-row playground">
+  <div class="playground__editor-container">
+    <textarea id="playground-editor" class="playground__editor"></textarea>
+  </div>
+  <div class="playground__preview-container">
+    <div class="device-mockup">
+      <div class="device-mockup__bar">
+        <span class="device-mockup__dot"></span>
+        <span class="device-mockup__dot"></span>
+        <span class="device-mockup__dot"></span>
+      </div>
+      <iframe id="playground-preview" class="playground__preview"></iframe>
+    </div>
+  </div>
+</section>
+
+
+<section id="farewell" class="hero">
+  <h1 class="headline">
+    <span class="front">
+      <span class="line left">THANKS</span>
+      <span class="line center">FOR</span>
+      <span class="line right">VISITING</span>
+    </span>
+    <span class="back">
+      <span class="line left">SEE</span>
+      <span class="line center">YOU</span>
+      <span class="line right">NEXT TIME</span>
+    </span>
+  </h1>
+</section>
+
+
+
+
 
     <div class="menu-dots">
         <span></span>
@@ -114,6 +202,8 @@
 
 
     <script src="index.js"></script>
-      
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js" integrity="sha512-tcHlo0KM9QmWd667IZ7FOiDHB+gf1YfOX8e8DLJiBpyd6hOp2N9TogzU0bzVQp4o0UxFpbvSEG/L4o2tGvU4/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+
+
 </body>
 </html>

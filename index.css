@@ -438,16 +438,6 @@ html, body {
     background-color: #FFC733;
   }
 
-.bento-box.skills {
-    background-color: #5EBD3E;
-    border-color:   #4CAF33; 
-    font-family: joel;
-    font-size: 100px;
-  }
-  
-  .bento-box.skills:hover {
-    background-color: #72d953;
-  }
 
 .bento-box.tools-workflow {
     background-color: #009CDF;
@@ -524,20 +514,6 @@ html, body {
     user-select: none;
   }
   
-.bento-box.projects {
-    background-color: #F78200;
-    border-color:   #C96B00; 
-    font-family: joel;
-    font-size: 60px;
-  }
-  
-  .bento-box.projects:hover {
-    background-color: #FF9E33;
-  }
-  
-
-
-
 
 
 
@@ -589,3 +565,391 @@ html, body {
   font-size: 2rem;
   font-weight: 700;
 }
+
+
+
+
+
+
+/* ===== Batterie-Box im Uhr-Look ===== */
+.bento-box.battery {
+  /* volle Zellen-Fläche nutzen */
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem;
+
+  /* identischer Background wie die Uhr-Box */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+
+  /* gleicher Bento-Rahmen */
+  border: 2px solid #222;
+  border-radius: 1rem;
+
+  /* subtiler innerer Schatten */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+
+  /* Inhalt nebeneinander */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: 'Segoe UI', Joel, sans-serif;
+  color: #fff;
+}
+
+/* Linke Seite: Icon + Label */
+.battery__left {
+  display: flex;
+  align-items: center;
+}
+.battery__icon {
+  font-size: 3rem;
+  margin-right: 0.75rem;
+}
+.battery__label {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Rechte Seite: Level % */
+.battery__right {
+  display: flex;
+  align-items: center;
+}
+.battery__level {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+
+
+/* ===== Medications-Box als reine Karte ===== */
+.bento-box.medications {
+  /* volle Zellen-Nutzung */
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0;           /* kein Innenabstand, Karte füllt alles */
+  
+  /* Bento-Box Styling */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+  border: 2px solid #222;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  overflow: hidden;     /* Karte darf nicht herausragen */
+}
+
+/* Karte füllt den gesamten Box-Inhalt */
+.medications__map {
+  width: 100%;
+  height: 100%;
+}
+.medications__map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+
+/* ===== Bento-Box Styling für Crypto ===== */
+.bento-box.crypto {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Uhr/Hintergrund-Look */
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+  border: 2px solid #222;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+
+  font-family: 'Segoe UI', Joel, sans-serif;
+  color: #fff;
+}
+
+/* 2×2-Grid für die vier Coins */
+.crypto__content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem; /* Reihenabstand 1.5rem, Spaltenabstand 2rem */
+}
+
+/* Einzelne Coin-Box */
+.crypto__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Icon */
+.crypto__icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+/* Symbol */
+.crypto__symbol {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+/* Preis */
+.crypto__price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+/* 24h-Change */
+.crypto__change {
+  font-size: 0.9rem;
+}
+.crypto__change.up   { color: #5EBD3E; }
+.crypto__change.down { color: #E23838; }
+
+
+
+
+/* ===== Neue High-End News-Cards (flach & farblich akzentuiert) ===== */
+.bento-box.skills.news {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+  border: 2px solid #222;
+  border-radius: 1rem;
+  overflow: hidden;
+  font-family: 'Segoe UI', Joel, sans-serif;
+  color: #fff;
+  height: 100%;
+}
+
+/* 2-Spalten-Grid, gleiche Reihenhöhe je nach Inhalt */
+.bento-box.skills.news .news__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+  overflow: visible;
+}
+
+/* Grund-Styling der Cards */
+.bento-box.skills.news .news__item a {
+  --accent: #fff;              /* wird pro Card überschrieben */
+  display: block;
+  height: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  transition: 
+    background 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Farbakzente pro Card */
+.bento-box.skills.news .news__item:nth-child(1) a { --accent: #FF6347; }  /* Tomato */
+.bento-box.skills.news .news__item:nth-child(2) a { --accent: #1E90FF; }  /* DodgerBlue */
+.bento-box.skills.news .news__item:nth-child(3) a { --accent: #3CB371; }  /* MediumSeaGreen */
+.bento-box.skills.news .news__item:nth-child(4) a { --accent: #DA70D6; }  /* Orchid */
+
+/* Hover-Effekt: leichter Lift & intensiverer Hintergrund */
+.bento-box.skills.news .news__item a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* Auf sehr schmalen Bildschirmen 1 Spalte */
+@media (max-width: 600px) {
+  .bento-box.skills.news .news__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Playground-Section: High-End Bento/Uhr-Look, volle Seitenhöhe ===== */
+.bento-box.playground {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  /* Volle Viewport-Höhe, aber gleiche Breite wie Bento-Boxen */
+  height: 100vh;
+  align-self: stretch;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 80%);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Editor- und Preview-Container füllen jetzt die Höhe */
+.playground__editor-container,
+.playground__preview-container {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Editor-Textarea */
+.playground__editor {
+  width: 100%;
+  height: 75%;
+  background: #111;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  color: rgb(250, 250, 250);
+  font-family: joel;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  padding: 1rem;
+  resize: none;
+  box-sizing: border-box;
+  margin-top: 10%;
+}
+
+/* Device-Mockup um die Preview */
+.device-mockup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.5),
+    0 4px 12px rgba(0,0,0,0.3);
+  overflow: hidden;
+  margin-top: 7%;
+}
+
+/* Top-Bar mit den drei „Fenster-Buttons“ */
+.device-mockup__bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(17,17,17,0.9);
+}
+.device-mockup__dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #444;
+  border-radius: 50%;
+}
+
+/* Preview-Iframe */
+.playground__preview {
+  width: 95%;
+  height: 75%; /* Bar-Höhe abziehen */
+  border: none;
+  border-radius: 0 0 1rem 1rem;
+  display: block;
+  background: #111;
+}
+
+/* Menü-Dots immer oben */
+.menu-dots {
+  z-index: 9999;
+}
+
+
+
+
+
+/* Abschieds-Headline Flip-Effekt (wiederverwendet von deinem Hero) */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.headline {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: max-content;
+  font-size: 300px;
+  line-height: 0.8;
+  cursor: pointer;
+  font-family: ilja;
+}
+
+.front, .back {
+  display: inline-flex;
+  flex-direction: column;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.front {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(20px) rotate(5deg);
+  text-transform: uppercase;
+}
+
+.headline:hover .front {
+  opacity: 0;
+  transform: translateY(-20px) rotate(-5deg);
+}
+
+.headline:hover .back {
+  opacity: 1;
+  transform: translateY(0) rotate(0);
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.8) translateY(20px) rotate(5deg); }
+  70%  { transform: scale(1.1) translateY(-5px) rotate(-2deg); }
+  100% { transform: scale(1)   translateY(0)   rotate(0); }
+}
+
+/* Zeilen-Positionierung */
+.line {
+  display: block;
+}
+.left   { align-self: flex-start; }
+.center { align-self: center;      }
+.right  { align-self: flex-end;    }
+
+/* Fragezeichen-Klasse nicht benötigt hier */
