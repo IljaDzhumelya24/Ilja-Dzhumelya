@@ -51,6 +51,13 @@ html, body {
     color: #fff;
 }
 
+
+
+
+
+
+/* Sction 1 */
+
 .custom-cursor {
     position: fixed;
     top: -1.5%;
@@ -178,48 +185,9 @@ html, body {
   }
   .menu-dots span.active {
     background: #555;
-  }
+  } 
   
-.scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: rotate(-10deg);
-  }
   
-.scroll-text {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    line-height: 1.1;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15rem;
-    margin-bottom: 0.5rem;
-    animation: fadeText 2s ease-in-out infinite;
-  }
-  
-.scroll-pointer {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: bouncePointer 1.5s ease-in-out infinite;
-  }
-  
-@keyframes fadeText {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.4; }
-  }
-
-@keyframes bouncePointer {
-    0%, 100% { transform: translateY(0) rotate(-10deg); }
-    50%      { transform: translateY(6px) rotate(-10deg); }
-  }
   
   section#bento {
     width: 100%;              
@@ -815,7 +783,6 @@ html, body {
   z-index: 1;
 }
 
-/* Editor- und Preview-Container füllen jetzt die Höhe */
 .playground__editor-container,
 .playground__preview-container {
   height: 100%;
